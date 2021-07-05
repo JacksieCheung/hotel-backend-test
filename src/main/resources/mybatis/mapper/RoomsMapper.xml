@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.web.hotel.mapper.RoomMapper">
+    <resultMap id="RoomModel" type="com.web.hotel.pojo.Rooms">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+    </resultMap>
+
+    <resultMap id="RoomInfo" type="com.web.hotel.pojo.RoomInfo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="price" jdbcType="INTEGER" property="price" />
+        <result column="info" jdbcType="VARCHAR" property="info" />
+    </resultMap>
+
+    <select id="getRoomById" resultMap="RoomModel">
+        select * from rooms where id = #{id};
+    </select>
+
+    <select id="getRoomList" resultMap="RoomInfo">
+        select rooms.*,room_type.price,room_type.info from rooms left join room_type on rooms.type_id = room_type.id order by id desc;
+    </select>
+
+    <update id="updateRoomStatusById">
+        update rooms set status = ${status} where id = #{id};
+    </update>
+
+    <insert id="createRoom" parameterType="com.web.hotel.pojo.Rooms">
+        insert into rooms(type_id,status) value(#{typeId,jdbcType=INTEGER},#{status,jdbcType=INTEGER});
+    </insert>
+
+</mapper>

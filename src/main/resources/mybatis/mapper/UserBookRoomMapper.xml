@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.web.hotel.mapper.UserBookRoomMapper">
+    <resultMap id="UserBookRoomModel" type="com.web.hotel.pojo.UserBookRoom">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="room_id" jdbcType="INTEGER" property="roomId" />
+        <result column="re" jdbcType="VARCHAR" property="re" />
+        <result column="create_at" jdbcType="VARCHAR" property="createAt" />
+    </resultMap>
+
+    <insert id="CreateRecord" parameterType="com.web.hotel.pojo.UserBookRoom">
+        insert into user_book_room(user_id,room_id,create_at) values(#{userId,jdbcType=INTEGER},
+            #{roomId,jdbcType=INTEGER},now());
+    </insert>
+
+    <update id="DeleteRecordById" >
+        update user_book_room set re = 1 where user_id = #{uid} and room_id = #{rid} and re = 0;
+    </update>
+
+    <select id="GetRecordByRoomId" resultMap="UserBookRoomModel">
+        select * from user_book_room where room_id = #{roomId} and re = 0;
+    </select>
+</mapper>

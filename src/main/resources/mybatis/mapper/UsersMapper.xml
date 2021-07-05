@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.web.hotel.mapper.UsersMapper">
+    <resultMap id="UserModel" type="com.web.hotel.pojo.Users">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="tel" jdbcType="VARCHAR" property="tel" />
+        <result column="role" jdbcType="INTEGER" property="role" />
+        <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+        <result column="vip" jdbcType="INTEGER" property="vip" />
+        <result column="create_at" jdbcType="VARCHAR" property="createAt" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+    </resultMap>
+
+    <select id="getUserByTelAndPwd" resultMap="UserModel">
+        select * from users where tel = #{tel} AND password = #{pwd};
+    </select>
+
+    <select id="getUserList" resultMap="UserModel">
+        select id,tel,vip,create_at from users where role = 0 order by id desc;
+    </select>
+
+    <update id="updateVipById" >
+        update users set vip = #{vip} where id = #{id};
+    </update>
+
+    <select id="getUserById" resultMap="UserModel">
+        select * from users where id = #{id} and role = 0;
+    </select>
+</mapper>
